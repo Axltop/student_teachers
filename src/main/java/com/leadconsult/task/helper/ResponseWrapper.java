@@ -12,11 +12,6 @@ public class ResponseWrapper<T> {
 	private String message;
 	private long timestamp = System.currentTimeMillis();
 
-	public ResponseWrapper(T data, Boolean success, String message) {
-		this.data = data;
-		this.message = message;
-		this.success = success;
-	}
 
 	public ResponseWrapper(T data ) {
 		this.data = data;

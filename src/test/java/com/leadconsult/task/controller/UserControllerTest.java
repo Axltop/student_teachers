@@ -84,6 +84,15 @@ public class UserControllerTest {
 //	}
 
 	@Test
+	@Order(4)
+	public void testDeleteStudentNotFound() throws Exception {
+		mockMvc.perform(delete("/user/{id}", 999L)
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNotFound())
+				.andExpect(jsonPath("$.message").value("User with ID:999 does not exists"));
+	}
+
+	@Test
 	public void testUpdateStudent_UserNotFound() throws Exception {
 		User nonExistentUser = new User();
 		nonExistentUser.setUserId(999L);
