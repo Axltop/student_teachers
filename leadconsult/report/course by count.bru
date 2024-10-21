@@ -1,0 +1,15 @@
+meta {
+  name: course by count
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{domain}}:{{port}}/report/course/byType?type=main
+  body: none
+  auth: none
+}
+
+params:query {
+  type: main
+}

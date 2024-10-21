@@ -1,0 +1,16 @@
+meta {
+  name: users by group and course
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{domain}}:{{port}}/report/user/byGroupAndCourse?groupId=1&courseId=2
+  body: none
+  auth: none
+}
+
+params:query {
+  groupId: 1
+  courseId: 2
+}

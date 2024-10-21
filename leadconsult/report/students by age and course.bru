@@ -1,0 +1,16 @@
+meta {
+  name: students by age and course
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{domain}}:{{port}}/report/student/byAgeAndCourse?courseId=1&age=15
+  body: none
+  auth: none
+}
+
+params:query {
+  courseId: 1
+  age: 15
+}
