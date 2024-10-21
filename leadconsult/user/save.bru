@@ -1,0 +1,20 @@
+meta {
+  name: save
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{domain}}:{{port}}/user
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name":"Alexander Topalov",
+    "age":38,
+    "group":"7V",
+    "userType":"TEACHER"
+  }
+}

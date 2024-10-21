@@ -1,0 +1,20 @@
+meta {
+  name: update
+  type: http
+  seq: 2
+}
+
+put {
+  url: {{domain}}:{{port}}/user
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "userId":101,
+    "age":38,
+    "group":"79V",
+    "name":"tops"
+  }
+}

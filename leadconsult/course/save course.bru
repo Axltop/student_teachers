@@ -1,0 +1,15 @@
+meta {
+  name: save course
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{domain}}:{{port}}/course
+  body: json
+  auth: none
+}
+
+body:json {
+  {"name":"Astrophysics","type":1}
+}
