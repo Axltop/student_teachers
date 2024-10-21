@@ -1,6 +1,5 @@
-package com.leadconsult.task;
+package com.leadconsult.task.helper;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

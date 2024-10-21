@@ -4,10 +4,6 @@ import com.leadconsult.task.constant.CourseType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.proxy.HibernateProxy;
-
-import java.util.Objects;
-import java.util.UUID;
 
 
 @Entity
@@ -29,6 +25,7 @@ public class Course {
 	@Column(unique = true, nullable = false)
 	private String name;
 
+	@NotNull
 	private CourseType type;
 
 }

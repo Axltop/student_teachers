@@ -1,5 +1,6 @@
 package com.leadconsult.task.model;
 
+import com.leadconsult.task.constant.UserType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -15,8 +16,6 @@ import java.util.Set;
 @Table(name="users")
 @Builder
 @AllArgsConstructor
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE) // Use single table inheritance
-@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
 public class User {
 
 	@Id
@@ -29,7 +28,10 @@ public class User {
 
 	@NotNull
 	private Short age;
-//	private  UserType type;
+
+	@NotNull
+	private UserType userType;
+
 	@ManyToMany
 	@JoinTable(
 			name = "user_group",
