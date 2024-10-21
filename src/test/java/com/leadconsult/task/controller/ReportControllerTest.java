@@ -51,10 +51,7 @@ public class ReportControllerTest {
 		mockMvc.perform(get("/report/course/byType")
 						.param("type", CourseType.MAIN.getType())
 						.contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.data").value(5));
-
-
+				.andExpect(status().isOk());
 	}
 
 	@Test

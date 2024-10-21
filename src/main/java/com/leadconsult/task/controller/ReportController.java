@@ -62,5 +62,4 @@ public class ReportController {
 		return ResponseEntity.ok(new ResponseWrapper<>(userService.findAllOlderThanAndCourseIdAndUserType(age,courseId,UserType.STUDENT)));
 	}
 
-
 }

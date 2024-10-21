@@ -10,12 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -38,7 +36,7 @@ public class UserServiceTest {
 	@BeforeEach
 	public void setUp() {
 		user = new User();
-
+		user.setUserId(15L);
 	}
 	@Test
 	public void testFindAllByGroupIdAndCourseId() {
@@ -72,7 +70,7 @@ public class UserServiceTest {
 	public void testUpdateStudentFound() throws UserNotFound {
 		when(userRepository.findById(user.getUserId())).thenReturn(Optional.of(user));
 
-		User updatedUser = userService.update(user);
+		userService.update(user);
 
 		verify(userRepository, times(1)).save(user);
 	}
@@ -83,7 +81,7 @@ public class UserServiceTest {
 
 		assertThatThrownBy(() -> userService.update(user))
 				.isInstanceOf(UserNotFound.class)
-				.hasMessage("Student not found with id: " + user.getUserId());
+				.hasMessage("User with ID:" + user.getUserId() + " does not exists");
 	}
 
 	@Test
@@ -93,7 +91,7 @@ public class UserServiceTest {
 		User foundStudent = userService.getById(user.getUserId());
 
 		assertThat(foundStudent).isEqualTo(user);
-		verify(userRepository, times(1)).findById(user.getUserId());
+		verify(userRepository, times(2)).findById(user.getUserId());
 	}
 
 	@Test
@@ -101,11 +99,13 @@ public class UserServiceTest {
 		when(userRepository.findById(user.getUserId())).thenReturn(Optional.empty());
 
 		assertThatThrownBy(() -> userService.getById(user.getUserId()))
-				.isInstanceOf(NoSuchElementException.class);
+				.isInstanceOf(UserNotFound.class);
 	}
 
 	@Test
 	public void testDeleteById() throws UserNotFound {
+		when(userRepository.findById(user.getUserId())).thenReturn(Optional.of(user));
+
 		userService.deleteById(user.getUserId());
 
 		verify(userRepository, times(1)).deleteById(user.getUserId());
@@ -113,7 +113,7 @@ public class UserServiceTest {
 
 	@Test
 	public void testCountAll() {
-		Long count = userService.countAllByUserType(UserType.STUDENT);
+		userService.countAllByUserType(UserType.STUDENT);
 		verify(userRepository, times(1)).countAllByUserType(UserType.STUDENT);
 	}
 

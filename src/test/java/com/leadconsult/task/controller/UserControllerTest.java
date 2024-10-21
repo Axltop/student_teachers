@@ -2,6 +2,7 @@ package com.leadconsult.task.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.leadconsult.task.constant.UserType;
 import com.leadconsult.task.model.User;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class StudentControllerTest {
+public class UserControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -34,6 +35,8 @@ public class StudentControllerTest {
 		user.setName("Jane Doe");
 		user.setAge((short) 20);
 		user.setUserId(110L);
+		user.setUserType(UserType.STUDENT);
+
 		MvcResult result = mockMvc.perform(post("/user")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(objectMapper.writeValueAsString(user)))
@@ -90,6 +93,6 @@ public class StudentControllerTest {
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(objectMapper.writeValueAsString(nonExistentUser)))
 				.andExpect(status().isNotFound())
-				.andExpect(jsonPath("$.message").value("Student not found with id: 999"));
+				.andExpect(jsonPath("$.message").value("User with ID:999 does not exists"));
 	}
 }
