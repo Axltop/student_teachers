@@ -36,7 +36,7 @@ public class CourseServiceTest {
 		CourseType courseType = CourseType.MAIN;
 		when(courseRepository.countAllByType(courseType)).thenReturn(5L);
 
-		Long count = courseService.countAllByType(courseType);
+		courseService.countAllByType(courseType);
 
 		verify(courseRepository, times(1)).countAllByType(courseType);
 	}
@@ -45,7 +45,7 @@ public class CourseServiceTest {
 	public void testSave() {
 		when(courseRepository.save(any(Course.class))).thenReturn(course);
 
-		Course savedCourse = courseService.save(course);
+		courseService.save(course);
 
 		verify(courseRepository, times(1)).save(course);
 	}

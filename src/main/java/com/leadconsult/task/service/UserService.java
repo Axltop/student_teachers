@@ -37,7 +37,7 @@ public class UserService {
 	public User getById(Long userId) throws UserNotFound {
 		Optional<User> existingStudentOptional = userRepository.findById(userId);
 		if (existingStudentOptional.isPresent()) {
-			return userRepository.findById(userId).orElseThrow();
+			return existingStudentOptional.get();
 		} else {
 			throw new UserNotFound( userId);
 		}

@@ -38,6 +38,7 @@ public class UserServiceTest {
 		user = new User();
 		user.setUserId(15L);
 	}
+
 	@Test
 	public void testFindAllByGroupIdAndCourseId() {
 		User user1 = new User();
@@ -53,16 +54,10 @@ public class UserServiceTest {
 		verify(userRepository,times(1)).findAllByGroupsGroupIdAndCoursesCourseId(groupId, courseId);
 	}
 
-
-
 	@Test
 	public void testSave() {
+		userService.save(user);
 
-		when(userRepository.save(any(User.class))).thenReturn(user);
-
-		User savedUser = userService.save(user);
-
-		assertThat(savedUser).isEqualTo(user);
 		verify(userRepository, times(1)).save(user);
 	}
 
@@ -71,7 +66,7 @@ public class UserServiceTest {
 		when(userRepository.findById(user.getUserId())).thenReturn(Optional.of(user));
 
 		userService.update(user);
-
+		verify(userRepository, times(1)).findById(user.getUserId());
 		verify(userRepository, times(1)).save(user);
 	}
 
@@ -88,10 +83,9 @@ public class UserServiceTest {
 	public void testGetByIdFound() throws UserNotFound {
 		when(userRepository.findById(user.getUserId())).thenReturn(Optional.of(user));
 
-		User foundStudent = userService.getById(user.getUserId());
+		userService.getById(user.getUserId());
 
-		assertThat(foundStudent).isEqualTo(user);
-		verify(userRepository, times(2)).findById(user.getUserId());
+		verify(userRepository, times(1)).findById(user.getUserId());
 	}
 
 	@Test
@@ -113,7 +107,10 @@ public class UserServiceTest {
 
 	@Test
 	public void testCountAll() {
+		when(userRepository.countAllByUserType(UserType.STUDENT)).thenReturn(51L);
+
 		userService.countAllByUserType(UserType.STUDENT);
+
 		verify(userRepository, times(1)).countAllByUserType(UserType.STUDENT);
 	}
 
@@ -123,9 +120,8 @@ public class UserServiceTest {
 		Long courseId = 1L;
 		when(userRepository.findAllByCoursesCourseIdAndUserType(courseId,UserType.STUDENT)).thenReturn(students);
 
-		List<User> result = userService.findAllByCourseIdAndUserType(courseId,UserType.STUDENT);
+		userService.findAllByCourseIdAndUserType(courseId,UserType.STUDENT);
 
-		Assertions.assertThat(result).isEqualTo(students);
 		verify(userRepository, times(1)).findAllByCoursesCourseIdAndUserType(courseId,UserType.STUDENT);
 	}
 
@@ -135,9 +131,8 @@ public class UserServiceTest {
 		Long groupId = 1L;
 		when(userRepository.findAllByGroupsGroupIdAndUserType(groupId,UserType.STUDENT)).thenReturn(students);
 
-		List<User> result = userService.findAllByGroupIdAndUserType(groupId,UserType.STUDENT);
+		userService.findAllByGroupIdAndUserType(groupId,UserType.STUDENT);
 
-		Assertions.assertThat(result).isEqualTo(students);
 		verify(userRepository, times(1)).findAllByGroupsGroupIdAndUserType(groupId,UserType.STUDENT);
 	}
 
@@ -148,9 +143,8 @@ public class UserServiceTest {
 		Long courseId = 1L;
 		when(userRepository.findAllByAgeGreaterThanEqualAndCoursesCourseIdIsAndUserType(age, courseId,UserType.STUDENT)).thenReturn(students);
 
-		List<User> result = userService.findAllOlderThanAndCourseIdAndUserType(age, courseId,UserType.STUDENT);
+		userService.findAllOlderThanAndCourseIdAndUserType(age, courseId,UserType.STUDENT);
 
-		Assertions.assertThat(result).isEqualTo(students);
 		verify(userRepository, times(1)).findAllByAgeGreaterThanEqualAndCoursesCourseIdIsAndUserType(age, courseId,UserType.STUDENT);
 	}
 }

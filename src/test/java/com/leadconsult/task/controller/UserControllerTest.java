@@ -2,6 +2,7 @@ package com.leadconsult.task.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.leadconsult.task.TaskApplication;
 import com.leadconsult.task.constant.UserType;
 import com.leadconsult.task.model.User;
 import org.junit.jupiter.api.*;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -16,9 +18,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
+@SpringBootTest(classes = TaskApplication.class)
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@ActiveProfiles("test")
 public class UserControllerTest {
 
 	@Autowired
@@ -31,7 +34,7 @@ public class UserControllerTest {
 
 	@Test
 	@Order(1)
-	public void testSaveStudent() throws Exception {
+	public void testSaveUser() throws Exception {
 		user.setName("Jane Doe");
 		user.setAge((short) 20);
 		user.setUserId(110L);
@@ -51,7 +54,7 @@ public class UserControllerTest {
 
 	@Test
 	@Order(2)
-	public void testUpdateStudent() throws Exception {
+	public void testUpdateUser() throws Exception {
 		User updatedUser = new User();
 		updatedUser.setUserId(2L);
 		updatedUser.setName("new Name");
@@ -66,7 +69,7 @@ public class UserControllerTest {
 
 	@Test
 	@Order(3)
-	public void testGetStudent() throws Exception {
+	public void testGetUser() throws Exception {
 		mockMvc.perform(get("/user/{id}",3L)
 						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
@@ -74,18 +77,18 @@ public class UserControllerTest {
 				.andExpect(jsonPath("$.data.name").value("Elsa Leffler"));
 	}
 
-//	@Test
-//	@Order(4)
-//	public void testDeleteStudent() throws Exception {
-//		mockMvc.perform(delete("/student/{id}", 3L)
-//						.contentType(MediaType.APPLICATION_JSON))
-//				.andExpect(status().isOk())
-//				.andExpect(jsonPath("$.message").value("Success!"));
-//	}
+	@Test
+	@Order(4)
+	public void testDeleteUser() throws Exception {
+		mockMvc.perform(delete("/user/{id}", 3L)
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.message").value("Success!"));
+	}
 
 	@Test
 	@Order(4)
-	public void testDeleteStudentNotFound() throws Exception {
+	public void testDeleteUserNotFound() throws Exception {
 		mockMvc.perform(delete("/user/{id}", 999L)
 						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isNotFound())
@@ -93,7 +96,7 @@ public class UserControllerTest {
 	}
 
 	@Test
-	public void testUpdateStudent_UserNotFound() throws Exception {
+	public void testUpdateUser_UserNotFound() throws Exception {
 		User nonExistentUser = new User();
 		nonExistentUser.setUserId(999L);
 		nonExistentUser.setName("Non Existent");
