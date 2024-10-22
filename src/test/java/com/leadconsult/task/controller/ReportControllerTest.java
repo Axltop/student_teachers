@@ -25,11 +25,6 @@ public class ReportControllerTest {
 	@Autowired
 	private MockMvc mockMvc;
 
-	@BeforeEach
-	public void setUp() {
-		MockitoAnnotations.openMocks(this);
-	}
-
 	@Test
 	public void testGetStudentsCount() throws Exception {
 

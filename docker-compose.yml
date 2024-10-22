@@ -1,0 +1,5 @@
+services:
+  student_teacher:
+    build: ./
+    ports:
+      - "8080:8080"

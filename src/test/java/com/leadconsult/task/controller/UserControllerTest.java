@@ -33,7 +33,7 @@ public class UserControllerTest {
 	@Autowired
 	private ObjectMapper objectMapper;
 
-	private User user =new User();;
+	private User user =new User();
 
 	@Test
 	@Order(1)
