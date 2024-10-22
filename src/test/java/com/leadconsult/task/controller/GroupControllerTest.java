@@ -19,6 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes= TaskApplication.class)
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
+
 public class GroupControllerTest {
 
 	@Autowired

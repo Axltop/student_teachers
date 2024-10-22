@@ -5,14 +5,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.leadconsult.task.TaskApplication;
 import com.leadconsult.task.constant.UserType;
 import com.leadconsult.task.model.User;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -25,6 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @ActiveProfiles("test")
+@DirtiesContext
 public class UserControllerTest {
 
 	@Autowired
@@ -33,7 +32,14 @@ public class UserControllerTest {
 	@Autowired
 	private ObjectMapper objectMapper;
 
-	private User user =new User();
+	private User user = new User();
+
+
+	@BeforeEach
+	public void setUp() {
+		System.out.println("RUN COURSE CONTROLLER TEST");
+	}
+
 
 	@Test
 	@Order(1)
@@ -73,7 +79,7 @@ public class UserControllerTest {
 	@Test
 	@Order(3)
 	public void testGetUser() throws Exception {
-		mockMvc.perform(get("/user/{id}",3L)
+		mockMvc.perform(get("/user/{id}", 3L)
 						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.data.userId").value(3L))
