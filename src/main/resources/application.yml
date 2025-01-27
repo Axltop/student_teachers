@@ -15,6 +15,14 @@ spring:
     init:
       platform: h2
       mode: embedded
+  cloud:
+    azure:
+      keyvault:
+        secret:
+          endpoint: ${KEY_VAULT_ENDPOINT}
+          property-sources[0]:
+            endpoint: ${KEY_VAULT_ENDPOINT}
+          property-source-enabled: true
 logging:
   level:
     root: WARN

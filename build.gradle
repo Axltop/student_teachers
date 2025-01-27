@@ -30,6 +30,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+	implementation 'com.azure.spring:spring-cloud-azure-starter-keyvault'
  	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -41,6 +42,13 @@ dependencies {
 
 
 }
+dependencyManagement {
+	imports {
+		mavenBom 'com.azure.spring:spring-cloud-azure-dependencies:5.19.0'
+	}
+}
+
+
 
 configurations {
 	testImplementation {
